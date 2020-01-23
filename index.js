@@ -1,4 +1,5 @@
 // Require needed packages
+let cors = require('cors')
 let express = require('express')
 let morgan = require('morgan')
 let rowdyLogger = require('rowdy-logger')
