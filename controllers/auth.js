@@ -11,7 +11,22 @@ router.post('/login', (req, res) => {
     email: req.body.email
   })
   .then( user => {
-    
+    // Make sure the user exists and has a password
+    if (!user || !user.password) {
+      return res.status(404).send({ message: 'User not found!' })
+    }
+
+    // Good - they exist. Now, we check the password
+    if (!user.isValidPassword(req.body.password)) {
+      return res.status(401).send({ message: 'Password is incorrect, you are unauthorized.' })
+    }
+
+    // Good user, issue token and send it
+    let token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+      expiresIn: 60 //in seconds
+    })
+
+    res.send({ token })
   })
   .catch( err => {
     console.log('Error in POST /auth/login', err)
