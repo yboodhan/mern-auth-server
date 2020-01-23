@@ -33,6 +33,7 @@ userSchema.pre('save', function (next) {
 userSchema.set('toJSON', {
   transform: (doc, user) => {
     delete user.password
+    delete user.__v
     return user
   }
 })

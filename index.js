@@ -10,6 +10,9 @@ let rowdyResults = rowdyLogger.begin(app)
 
 // Set up middleware
 app.use(morgan('dev'))
+app.use(cors())
+app.use(express.urlencoded({ extended: false })) // Accept form data
+app.use(express.json()) // Accept data from fetch (or any AJAX (fetch, ajax, axios) call)
 
 // Routes
 app.use('/auth', require('./controllers/auth'))
